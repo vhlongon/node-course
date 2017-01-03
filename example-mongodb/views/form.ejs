@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <link href=assets/styles.css type=text/css rel=stylesheet />
+    </head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
+    <body>
+        <section>
+            <h1>Testing a normal post request with Node</h1>
+            <form method="POST" action="/person">
+                First name: <input type="text" id="firstname" name="firstname" />
+                <br>
+                Last name: <input type="text" id="lastname" name="lastname" />
+                <br>
+                <input type="submit" value="send" />
+            </form>
+        </section>
+
+        <section>
+            <h1>Testing a ajax post request with Node using axios</h1>
+        <form id="ajax-form" method="POST" action="/personjson">
+            First name: <input type="text" id="jfirstname" name="jfirstname" />
+            <br>
+            Last name: <input type="text" id="jlastname" name="jlastname" />
+            <br>
+            <input type="submit" value="send" />
+        </form>
+        </section>
+    </body>
+</html>
+
+<!-- Quick and dirty test for sending a ajax request using Axios -->
+<script>
+    const ajaxForm = document.getElementById('ajax-form');
+    
+    ajaxForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const url = ajaxForm.getAttribute('action');
+        const data = {
+            firstname: document.getElementById('jfirstname').value,
+            lastname: document.getElementById('jlastname').value
+        };
+
+        axios.post(url, data)
+            .then(res => {
+                console.log('Posted', res);
+                ajaxForm.innerHTML = 'Thanks for your ajax submission';
+            })
+            .catch(err => {
+                console.warn('Error', err);
+            });
+    });
+</script>
